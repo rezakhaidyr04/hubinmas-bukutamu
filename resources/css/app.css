@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    body {
+        @apply overflow-x-hidden;
+    }
+
+    /* Prevent iOS zoom on input focus */
+    @media (max-width: 640px) {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        input[type="date"],
+        select,
+        textarea {
+            font-size: 16px !important;
+        }
+    }
+}
+
+@layer utilities {
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .safe-area-top {
+        padding-top: env(safe-area-inset-top, 0);
+    }
+}
