@@ -61,12 +61,11 @@
             <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo SMK TI Muhammadiyah Cikampek" class="w-10 h-10 sm:w-12 sm:h-12 object-contain shrink-0 drop-shadow-xs">
                 <div class="min-w-0 flex flex-col justify-center">
-                    <h1 class="text-sm sm:text-lg font-black tracking-wide text-slate-900 leading-snug truncate uppercase">
+                    <span class="text-xs sm:text-sm font-bold tracking-wide text-slate-700 leading-snug uppercase">
                         SMK TI MUHAMMADIYAH
-                    </h1>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 tracking-tight leading-tight">
-                        Buku Tamu Digital<br>
-                        <span class="text-primary-600 font-extrabold">MUTU</span>
+                    </span>
+                    <h1 class="text-lg sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                        Buku Tamu Digital <span class="text-primary-600 font-extrabold">MUTU</span>
                     </h1>
                 </div>
             </div>
@@ -88,8 +87,8 @@
         
         <!-- Left Side: Copywriting & CTA -->
         <div class="w-full lg:w-1/2 flex flex-col justify-center px-5 sm:px-10 lg:px-16 xl:px-24 py-8 lg:py-0 order-2 lg:order-1">
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-700 mb-1 sm:mb-2">Selamat Datang di</h3>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-primary-700 leading-tight mb-6 sm:mb-8">
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-slate-600 mb-1 sm:mb-2">Selamat Datang di</h3>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-primary-600 leading-tight mb-6 sm:mb-8 tracking-tight">
                 SMK TI MUHAMMADIYAH<br/>CIKAMPEK
             </h2>
             
