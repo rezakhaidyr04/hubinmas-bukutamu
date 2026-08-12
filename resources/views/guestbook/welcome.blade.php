@@ -54,28 +54,28 @@
 >
 
     <!-- Header Section -->
-    <header class="w-full px-4 sm:px-8 py-3.5 sm:py-4 bg-white shadow-sm border-b border-slate-200/80 z-30 shrink-0 sticky top-0 safe-area-top">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 w-full">
+    <header class="w-full px-3 sm:px-8 py-3 sm:py-4 bg-white shadow-sm border-b border-slate-200/80 z-30 shrink-0 sticky top-0 safe-area-top">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 w-full">
             
             <!-- Left: Logo & School Name -->
-            <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo SMK TI Muhammadiyah Cikampek" class="w-10 h-10 sm:w-12 sm:h-12 object-contain shrink-0 drop-shadow-xs">
+            <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo SMK TI Muhammadiyah Cikampek" class="w-9 h-9 sm:w-12 sm:h-12 object-contain shrink-0 drop-shadow-xs">
                 <div class="min-w-0 flex flex-col justify-center">
-                    <span class="text-xs sm:text-sm font-bold tracking-wide text-slate-700 leading-snug uppercase">
+                    <span class="text-[10px] sm:text-sm font-bold tracking-wide text-slate-700 leading-snug uppercase">
                         SMK TI MUHAMMADIYAH
                     </span>
-                    <h1 class="text-lg sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                    <h1 class="text-base sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight whitespace-nowrap">
                         Buku Tamu Digital <span class="text-primary-600 font-extrabold">MUTU</span>
                     </h1>
                 </div>
             </div>
 
             <!-- Right: Realtime Time & Date Badge -->
-            <div class="flex items-center gap-2 sm:gap-4">
-                <a href="{{ route('admin.login') }}" class="text-xs font-semibold text-slate-200 hover:text-primary-600 transition-colors select-none" title="Admin Login">Admin</a>
-                <div class="flex flex-col items-end shrink-0 bg-slate-50 border border-slate-200/80 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl shadow-2xs">
-                    <div class="text-sm sm:text-xl font-black text-primary-700 font-mono tracking-wider leading-none" x-text="currentTime"></div>
-                    <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1" x-text="currentDate"></div>
+            <div class="flex items-center gap-1.5 sm:gap-4">
+                <a href="{{ route('admin.login') }}" class="inline-flex items-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-colors hover:border-primary-200 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200" title="Login Admin">Admin</a>
+                <div class="flex flex-col items-end shrink-0 bg-slate-50 border border-slate-200/80 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl shadow-2xs">
+                    <div class="text-xs sm:text-xl font-black text-primary-700 font-mono tracking-wider leading-none" x-text="currentTime"></div>
+                    <div class="hidden sm:block text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1" x-text="currentDate"></div>
                 </div>
             </div>
 
@@ -86,13 +86,13 @@
     <main class="flex-1 flex flex-col lg:flex-row items-stretch w-full">
         
         <!-- Left Side: Copywriting & CTA -->
-        <div class="w-full lg:w-1/2 flex flex-col justify-center px-5 sm:px-10 lg:px-16 xl:px-24 py-8 lg:py-0 order-2 lg:order-1">
-            <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-slate-600 mb-1 sm:mb-2">Selamat Datang di</h3>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-primary-600 leading-tight mb-6 sm:mb-8 tracking-tight">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center px-5 sm:px-10 lg:px-16 xl:px-24 py-7 sm:py-8 lg:py-0 order-2 lg:order-1">
+            <h3 class="text-base sm:text-xl lg:text-2xl font-bold text-slate-600 mb-1 sm:mb-2">Selamat Datang di</h3>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-primary-600 leading-tight mb-4 sm:mb-8 tracking-tight">
                 SMK TI MUHAMMADIYAH<br/>CIKAMPEK
             </h2>
             
-            <p class="text-base sm:text-lg text-slate-600 mb-8 sm:mb-12 max-w-md font-medium leading-relaxed">
+            <p class="text-sm sm:text-lg text-slate-600 mb-7 sm:mb-12 max-w-md font-medium leading-relaxed">
                 Silakan isi buku tamu sebagai bukti kunjungan Anda.
             </p>
             
@@ -112,7 +112,7 @@
             </a>
             
             <!-- Credits -->
-            <div class="mt-12 text-[10px] sm:text-xs text-slate-300 opacity-50 font-medium tracking-wide" style="font-family: 'Book Antiqua', Palatino, serif;">
+            <div class="mt-8 sm:mt-12 text-[10px] sm:text-xs text-slate-300 opacity-50 font-medium tracking-wide" style="font-family: 'Book Antiqua', Palatino, serif;">
                 Created by Reza, Dhafi & Issma
             </div>
         </div>
