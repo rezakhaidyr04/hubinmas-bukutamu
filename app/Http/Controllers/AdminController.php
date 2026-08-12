@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Visit;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -14,7 +17,7 @@ class AdminController extends Controller
      */
     public function showLogin(Request $request)
     {
-        if ($request->session()->get('admin_logged_in')) {
+        if (Auth::check() || $request->session()->get('admin_logged_in')) {
             return redirect()->route('admin.dashboard');
         }
         $securityQuestion = Setting::where('key', 'security_question')->value('value');
@@ -22,23 +25,24 @@ class AdminController extends Controller
     }
 
     /**
-     * Proses Login PIN
+     * Proses Login Email & Kata Sandi
      */
     public function login(Request $request)
     {
         $request->validate([
-            'pin' => 'required|string|size:6'
+            'email' => 'required|email',
+            'pin' => 'required|string|min:6|max:255'
         ]);
 
-        $dbPin = Setting::where('key', 'admin_pin')->value('value') ?? '123456';
-
-        if ($request->pin === $dbPin) {
+        $admin = User::whereRaw('LOWER(email) = ?', [strtolower(trim($request->email))])->first();
+        if ($admin && Hash::check($request->pin, $admin->password)) {
+            Auth::login($admin);
             $request->session()->put('admin_logged_in', true);
             return response()->json(['status' => 'success']);
         }
 
         return response()->json([
-            'message' => 'PIN yang Anda masukkan salah.'
+            'message' => 'Email atau kata sandi yang Anda masukkan salah.'
         ], 422);
     }
 
@@ -48,9 +52,12 @@ class AdminController extends Controller
     public function forgotPin(Request $request)
     {
         $request->validate([
-            'answer' => 'required|string'
+            'email' => 'required|email',
+            'answer' => 'required|string',
+            'new_password' => 'required|string|min:6|max:255|confirmed'
         ]);
 
+        $admin = User::whereRaw('LOWER(email) = ?', [strtolower(trim($request->email))])->first();
         $dbQuestion = Setting::where('key', 'security_question')->value('value');
         $dbAnswer = Setting::where('key', 'security_answer')->value('value');
 
@@ -61,10 +68,12 @@ class AdminController extends Controller
         }
 
         // Case-insensitive check
-        if (strtolower(trim($request->answer)) === strtolower(trim($dbAnswer))) {
-            // Login user bypass
+        if ($admin
+            && strtolower(trim($request->answer)) === strtolower(trim($dbAnswer))) {
+            $admin->update(['password' => $request->new_password]);
+            Auth::login($admin);
             $request->session()->put('admin_logged_in', true);
-            return response()->json(['status' => 'success', 'message' => 'Jawaban benar. Mengalihkan ke dashboard...']);
+            return response()->json(['status' => 'success', 'message' => 'Password berhasil diubah. Mengalihkan ke dashboard...']);
         }
 
         return response()->json([
@@ -77,6 +86,7 @@ class AdminController extends Controller
      */
     public function logout(Request $request)
     {
+        Auth::logout();
         $request->session()->forget('admin_logged_in');
         return redirect()->route('admin.login');
     }
@@ -150,8 +160,9 @@ class AdminController extends Controller
         $tujuanOptions = Setting::getTujuanOptions();
         $customQuestions = Setting::getCustomQuestions();
         $securityQuestion = Setting::where('key', 'security_question')->value('value') ?? '';
+        $adminEmail = Setting::where('key', 'admin_email')->value('value') ?? '';
         
-        return view('admin.settings', compact('requirePhone', 'requireEmail', 'categories', 'tujuanOptions', 'customQuestions', 'securityQuestion'));
+        return view('admin.settings', compact('requirePhone', 'requireEmail', 'categories', 'tujuanOptions', 'customQuestions', 'securityQuestion', 'adminEmail'));
     }
 
     /**
@@ -159,12 +170,26 @@ class AdminController extends Controller
      */
     public function updateSettings(Request $request)
     {
+        if ($request->filled('admin_email')) {
+            $request->validate([
+                'admin_email' => 'required|email|max:255',
+            ]);
+
+            Setting::updateOrCreate(['key' => 'admin_email'], ['value' => strtolower($request->admin_email)]);
+            if ($user = User::first()) {
+                $user->update(['email' => strtolower($request->admin_email)]);
+            }
+        }
+
         // Update PIN jika diisi
         if ($request->filled('pin')) {
             $request->validate([
-                'pin' => 'required|string|size:6'
+                'pin' => 'required|string|min:6|max:255'
             ]);
             Setting::updateOrCreate(['key' => 'admin_pin'], ['value' => $request->pin]);
+            if ($user = User::first()) {
+                $user->update(['password' => $request->pin]);
+            }
         }
 
         // Update Security Question

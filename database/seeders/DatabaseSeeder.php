@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Setting::updateOrCreate(['key' => 'admin_pin'], ['value' => '123456']);
         \App\Models\Setting::updateOrCreate(['key' => 'require_phone'], ['value' => '0']);
         \App\Models\Setting::updateOrCreate(['key' => 'require_email'], ['value' => '0']);
         \App\Models\Setting::updateOrCreate(

@@ -390,24 +390,40 @@
             <!-- Tab: Keamanan & PIN -->
             <div x-show="activeTab === 'keamanan'" x-cloak class="flex flex-col lg:flex-row gap-10">
                 <div class="w-full lg:w-1/3">
-                    <h3 class="text-lg font-bold text-slate-800 mb-2">Keamanan & PIN Admin</h3>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Keamanan Admin</h3>
                     <p class="text-sm text-slate-500 font-medium leading-relaxed">
-                        Perbarui PIN keamanan untuk masuk ke dashboard admin. PIN harus terdiri dari 6 digit angka.
+                        Atur email dan kata sandi untuk masuk ke dashboard admin. Kata sandi minimal 6 karakter.
                     </p>
                 </div>
                 <div class="w-full lg:w-2/3 max-w-md">
                     <div class="bg-slate-50 rounded-xl border border-slate-100 p-6 space-y-4">
                         <div>
-                            <label for="pin" class="block text-sm font-bold text-slate-700 mb-2">PIN Admin Baru (6 Digit)</label>
+                            <label for="admin_email" class="block text-sm font-bold text-slate-700 mb-2">Email Admin</label>
+                            <input
+                                type="email"
+                                name="admin_email"
+                                id="admin_email"
+                                value="{{ old('admin_email', $adminEmail) }}"
+                                required
+                                placeholder="nama@contoh.com"
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm transition-all bg-white"
+                            >
+                            @error('admin_email')
+                                <p class="text-xs text-danger-500 mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <hr class="border-slate-100 my-4">
+                        <div>
+                            <label for="pin" class="block text-sm font-bold text-slate-700 mb-2">Kata Sandi Admin Baru</label>
                             <input 
                                 type="password" 
                                 name="pin" 
                                 id="pin"
-                                maxlength="6"
-                                placeholder="Masukkan 6 digit PIN baru"
-                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm font-mono tracking-widest text-center transition-all bg-white"
+                                minlength="6"
+                                placeholder="Masukkan kata sandi baru"
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm transition-all bg-white"
                             >
-                            <p class="text-xs text-slate-400 mt-2">Kosongkan jika tidak ingin mengubah PIN admin saat ini.</p>
+                            <p class="text-xs text-slate-400 mt-2">Kosongkan jika tidak ingin mengubah kata sandi admin saat ini.</p>
                         </div>
                         <hr class="border-slate-100 my-4">
                         <div>

@@ -15,7 +15,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->session()->get('admin_logged_in')) {
+        if (!auth()->check() && !$request->session()->get('admin_logged_in')) {
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Unauthorized. Silakan login terlebih dahulu.'], 401);
             }
