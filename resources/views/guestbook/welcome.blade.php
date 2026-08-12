@@ -110,6 +110,11 @@
                     <span class="text-xs sm:text-sm text-primary-100 font-medium opacity-90">Sentuh untuk memulai</span>
                 </div>
             </a>
+            
+            <!-- Credits -->
+            <div class="mt-12 text-[10px] sm:text-xs text-slate-300 opacity-50 font-medium tracking-wide" style="font-family: 'Book Antiqua', Palatino, serif;">
+                Created by Reza, Dhafi & Issma
+            </div>
         </div>
 
         <!-- Right Side: Illustration -->
@@ -141,6 +146,8 @@
             </div>
         </div>
     </footer>
+
+
 
 </body>
 </html>
