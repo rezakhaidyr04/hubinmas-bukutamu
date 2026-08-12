@@ -118,14 +118,14 @@
         </div>
 
         <!-- Right Side: Illustration -->
-        <div class="w-full lg:w-1/2 bg-primary-50 relative overflow-hidden min-h-[280px] sm:min-h-[360px] lg:min-h-[520px] order-1 lg:order-2">
+        <div class="w-full lg:w-1/2 bg-primary-50 relative overflow-hidden aspect-[1091/437] sm:aspect-auto sm:min-h-[360px] lg:min-h-[520px] order-1 lg:order-2">
             <div class="absolute w-[300px] sm:w-[450px] lg:w-[600px] h-[300px] sm:h-[450px] lg:h-[600px] bg-primary-100/50 rounded-full blur-3xl -top-16 -right-12"></div>
             <div class="absolute w-[220px] sm:w-[340px] lg:w-[500px] h-[220px] sm:h-[340px] lg:h-[500px] bg-sky-200/40 rounded-full blur-3xl bottom-0 left-0"></div>
             
             <img 
                 src="{{ asset('images/banner_mutu.png') }}" 
                 alt="Banner MUTU" 
-                class="relative z-10 w-full h-full object-cover drop-shadow-2xl"
+                class="relative z-10 w-full h-full object-contain drop-shadow-2xl"
             />
         </div>
         
