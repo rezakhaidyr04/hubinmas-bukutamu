@@ -12,6 +12,7 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         nama_lengkap: '',
         asal_instansi: '',
         tujuan_bertemu: '',
+        tujuan_bertemu_lainnya: '',
         keperluan: '',
         no_telepon: '',
         email: '',
@@ -28,9 +29,24 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         return true;
     },
 
+    getResolvedTujuanBertemu() {
+        if (this.form.tujuan_bertemu === 'Lainnya') {
+            return (this.form.tujuan_bertemu_lainnya || '').trim();
+        }
+
+        return (this.form.tujuan_bertemu || '').trim();
+    },
+
     validateStep2() {
-        if (!this.form.nama_lengkap || !this.form.asal_instansi || !this.form.tujuan_bertemu || !this.form.keperluan) {
+        const tujuanBertemu = this.getResolvedTujuanBertemu();
+
+        if (!this.form.nama_lengkap || !this.form.asal_instansi || !tujuanBertemu || !this.form.keperluan) {
             this.errorMessage = 'Mohon lengkapi semua data wajib (bertanda bintang merah).';
+            return false;
+        }
+
+        if (this.form.tujuan_bertemu === 'Lainnya' && !this.form.tujuan_bertemu_lainnya.trim()) {
+            this.errorMessage = 'Mohon isi tujuan / pihak yang dituju secara manual.';
             return false;
         }
         if (this.config.requirePhone === '1' && !this.form.no_telepon) {
@@ -93,6 +109,12 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
             const csrfToken = csrfMeta ? csrfMeta.content : '';
             
             // Dummy submit endpoint, later to be replaced by actual Laravel route
+            const payload = {
+                ...this.form,
+                tujuan_bertemu: this.getResolvedTujuanBertemu(),
+            };
+            delete payload.tujuan_bertemu_lainnya;
+
             const response = await fetch('/guestbook/submit', {
                 method: 'POST',
                 headers: {
@@ -100,7 +122,7 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 },
-                body: JSON.stringify(this.form)
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {

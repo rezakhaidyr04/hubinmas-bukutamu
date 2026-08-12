@@ -44,7 +44,7 @@
 
             <div class="flex flex-col border-b border-slate-200 pb-3">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tujuan / Bertemu</span>
-                <span class="font-semibold text-slate-800 truncate" x-text="form.tujuan_bertemu"></span>
+                <span class="font-semibold text-slate-800 truncate" x-text="getResolvedTujuanBertemu()"></span>
             </div>
 
             <div class="flex flex-col border-b md:border-b-0 border-slate-200 pb-3 md:pb-0 md:col-span-2">

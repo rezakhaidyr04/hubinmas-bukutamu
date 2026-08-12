@@ -41,7 +41,6 @@ class GuestbookController extends Controller
         $requirePhoneSetting = Setting::where('key', 'require_phone')->value('value') ?? '0';
         $requireEmailSetting = Setting::where('key', 'require_email')->value('value') ?? '0';
         $allowedCategories = Setting::getCategoryNames();
-        $allowedTujuan = Setting::getTujuanOptions();
         $customQuestions = Setting::getCustomQuestions();
 
         // Tentukan aturan validasi
@@ -49,7 +48,7 @@ class GuestbookController extends Controller
             'kategori' => ['required', 'string', Rule::in($allowedCategories)],
             'nama_lengkap' => 'required|string|max:255',
             'asal_instansi' => 'required|string|max:255',
-            'tujuan_bertemu' => ['required', 'string', Rule::in($allowedTujuan)],
+            'tujuan_bertemu' => ['required', 'string', 'max:255', Rule::notIn(['Lainnya'])],
             'keperluan' => 'required|string',
             'no_telepon' => $requirePhoneSetting === '1' ? 'required|string|min:8' : 'nullable|string',
             'email' => $requireEmailSetting === '1' ? 'required|email' : 'nullable|email',

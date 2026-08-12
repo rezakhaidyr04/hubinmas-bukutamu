@@ -53,6 +53,19 @@
                         <option value="{{ $option }}">{{ $option }}</option>
                     @endforeach
                 </select>
+                <div
+                    x-show="form.tujuan_bertemu === 'Lainnya'"
+                    x-cloak
+                    class="mt-3"
+                >
+                    <input
+                        type="text"
+                        x-model="form.tujuan_bertemu_lainnya"
+                        class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all text-slate-800 bg-slate-50 focus:bg-white"
+                        placeholder="Tulis tujuan / pihak yang dituju secara manual"
+                    >
+                    <p class="text-xs text-slate-500 mt-1.5">Isi manual jika pihak yang dituju tidak ada di daftar.</p>
+                </div>
             </div>
 
             <!-- Keperluan -->
