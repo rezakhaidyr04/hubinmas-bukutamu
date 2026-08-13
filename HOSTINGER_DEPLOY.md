@@ -1,5 +1,15 @@
 # Deploy Laravel ke Hostinger
 
+## Upload langsung ke `public_html`
+
+Proyek ini sekarang memiliki `index.php` dan `.htaccess` di root, sehingga
+seluruh isi proyek dapat di-upload langsung ke `public_html`. Apache akan
+meneruskan request aplikasi ke folder `public` dan memblokir folder internal.
+
+Pastikan file `.env` production sudah diisi dan folder `storage` dapat ditulis.
+Jika memakai pengaturan document root khusus, tetap disarankan mengarahkannya
+ke folder `public`.
+
 Gunakan struktur ini di hosting agar folder aplikasi tidak terbuka ke publik:
 
 ```
