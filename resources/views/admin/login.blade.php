@@ -126,7 +126,7 @@
                         :type="showPin ? 'text' : 'password'" 
                         id="pin" 
                         x-model="pin"
-                        class="w-full pl-5 pr-12 py-4 rounded-2xl border-2 border-slate-200 outline-none focus:border-primary-500 font-mono tracking-widest text-center text-xl bg-slate-50 focus:bg-white transition-all"
+                        class="w-full pl-5 pr-12 py-4 rounded-2xl border-2 border-slate-200 outline-none focus:border-primary-500 font-mono tracking-widest text-left text-xl bg-slate-50 focus:bg-white transition-all"
                         placeholder="••••••"
                         autocomplete="current-password"
                         required

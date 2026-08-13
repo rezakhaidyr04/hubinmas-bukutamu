@@ -111,8 +111,17 @@
                 </div>
             </a>
             
+            <!-- Company Photo -->
+            <div class="mt-6 sm:mt-8">
+                <img 
+                    src="{{ asset('images/perusahaan.jpeg') }}" 
+                    alt="Foto Perusahaan" 
+                    class="w-full max-w-md rounded-2xl shadow-md object-cover"
+                >
+            </div>
+
             <!-- Credits -->
-            <div class="mt-8 sm:mt-12 text-[10px] sm:text-xs text-slate-300 opacity-50 font-medium tracking-wide" style="font-family: 'Book Antiqua', Palatino, serif;">
+            <div class="mt-4 sm:mt-6 text-[10px] sm:text-xs text-slate-300 opacity-50 font-medium tracking-wide" style="font-family: 'Book Antiqua', Palatino, serif;">
                 Created by Reza, Dhafi & Issma
             </div>
         </div>
