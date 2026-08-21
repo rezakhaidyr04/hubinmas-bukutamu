@@ -19,6 +19,7 @@ class Visit extends Model
         'no_telepon',
         'email',
         'custom_answers',
+        'signature',
     ];
 
     protected $casts = [

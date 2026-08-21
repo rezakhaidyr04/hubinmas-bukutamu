@@ -313,10 +313,10 @@ class AdminController extends Controller
             return view('admin.export', compact('visits'))->with('print_pdf', true);
         }
 
-        // Default to Excel (HTML format)
+        // Excel — pakai template terpisah yang bersih
         $filename = "Hubinmas_BukuTamu_Export_" . date('Ymd_His') . ".xls";
 
-        return response(view('admin.export', compact('visits'))->render())
+        return response(view('admin.export-excel', compact('visits'))->render())
             ->header('Content-Type', 'application/vnd.ms-excel; charset=utf-8')
             ->header('Content-Disposition', 'attachment; filename=' . $filename)
             ->header('Pragma', 'no-cache')

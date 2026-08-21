@@ -5,6 +5,7 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
     isLoading: false,
     errorMessage: '',
     config: config,
+    _signaturePad: null,
     
     // Data Form
     form: {
@@ -16,7 +17,8 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         keperluan: '',
         no_telepon: '',
         email: '',
-        custom_answers: {}
+        custom_answers: {},
+        signature: ''
     },
 
     // Validasi per step
@@ -33,7 +35,6 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         if (this.form.tujuan_bertemu === 'Lainnya') {
             return (this.form.tujuan_bertemu_lainnya || '').trim();
         }
-
         return (this.form.tujuan_bertemu || '').trim();
     },
 
@@ -75,6 +76,44 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         return true;
     },
 
+    // Inisialisasi Signature Pad setelah step 3 ditampilkan
+    initSignaturePad() {
+        this.$nextTick(() => {
+            const canvas = document.getElementById('signature-canvas');
+            if (!canvas || this._signaturePad) return;
+
+            // Set canvas size to match display size
+            const wrapper = document.getElementById('signature-pad-wrapper');
+            canvas.width = wrapper ? wrapper.offsetWidth : 400;
+            canvas.height = 160;
+
+            this._signaturePad = new SignaturePad(canvas, {
+                backgroundColor: 'rgba(248, 250, 252, 1)',
+                penColor: '#1e293b',
+                minWidth: 1.5,
+                maxWidth: 3,
+            });
+
+            // Hide placeholder when user begins signing
+            const placeholder = document.getElementById('signature-placeholder');
+            this._signaturePad.addEventListener('beginStroke', () => {
+                if (placeholder) placeholder.style.display = 'none';
+            });
+
+            // Clear button
+            const clearBtn = document.getElementById('clear-signature-btn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    this._signaturePad.clear();
+                    if (placeholder) placeholder.style.display = 'flex';
+                    this.form.signature = '';
+                    const errEl = document.getElementById('signature-error');
+                    if (errEl) errEl.classList.add('hidden');
+                });
+            }
+        });
+    },
+
     // Navigasi
     nextStep() {
         if (this.step === 1 && this.validateStep1()) {
@@ -82,7 +121,9 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (this.step === 2 && this.validateStep2()) {
             this.step = 3;
+            this._signaturePad = null; // reset so it re-inits fresh
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.initSignaturePad();
         }
     },
 
@@ -90,6 +131,7 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
         if (this.step > 1) {
             this.step--;
             this.errorMessage = '';
+            this._signaturePad = null;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     },
@@ -101,6 +143,17 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
 
     // Submit ke server
     async submitForm() {
+        // Validasi tanda tangan wajib diisi
+        const errEl = document.getElementById('signature-error');
+        if (!this._signaturePad || this._signaturePad.isEmpty()) {
+            if (errEl) errEl.classList.remove('hidden');
+            return;
+        }
+        if (errEl) errEl.classList.add('hidden');
+
+        // Ambil data tanda tangan sebagai base64 PNG
+        this.form.signature = this._signaturePad.toDataURL('image/png');
+
         this.isLoading = true;
         this.errorMessage = '';
         
@@ -108,7 +161,6 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
             const csrfMeta = document.querySelector('meta[name=\'csrf-token\']');
             const csrfToken = csrfMeta ? csrfMeta.content : '';
             
-            // Dummy submit endpoint, later to be replaced by actual Laravel route
             const payload = {
                 ...this.form,
                 tujuan_bertemu: this.getResolvedTujuanBertemu(),
@@ -127,7 +179,6 @@ export default (config = { requirePhone: '0', requireEmail: '0', customQuestions
 
             if (response.ok) {
                 const data = await response.json();
-                // Redirect ke halaman sukses dengan ID kunjungan
                 window.location.href = `/guestbook/success?id=${data.id_kunjungan}`;
             } else {
                 const data = await response.json();

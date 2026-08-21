@@ -327,6 +327,24 @@
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">KEPERLUAN</span>
                         <div class="bg-slate-50 p-4 rounded-xl text-slate-700 border border-slate-100 text-sm font-medium whitespace-pre-line" x-text="selectedVisit.keperluan"></div>
                     </div>
+
+                    <!-- Tanda Tangan -->
+                    <div x-show="selectedVisit.signature">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">TANDA TANGAN</span>
+                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-3 flex items-center justify-center">
+                            <img 
+                                :src="selectedVisit.signature" 
+                                alt="Tanda Tangan Tamu" 
+                                class="max-h-32 object-contain rounded-lg"
+                                style="background: white;"
+                            >
+                        </div>
+                    </div>
+                    <div x-show="!selectedVisit.signature">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">TANDA TANGAN</span>
+                        <span class="text-slate-400 text-sm font-medium italic">Belum ada tanda tangan</span>
+                    </div>
+
                 </div>
             </div>
         </div>

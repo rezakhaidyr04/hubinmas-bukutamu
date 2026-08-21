@@ -9,9 +9,14 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
         [x-cloak] { display: none !important; }
+        #signature-canvas {
+            touch-action: none;
+            cursor: crosshair;
+        }
     </style>
 </head>
 <body 

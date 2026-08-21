@@ -83,7 +83,7 @@ class GuestbookController extends Controller
 
         $validated = $request->validate($rules, $messages);
 
-        // Filter custom answers agar hanya menyimpan label yang terdaftar
+        // Filter custom answers
         $cleanCustomAnswers = [];
         foreach ($customQuestions as $cq) {
             $cqLabel = $cq['label'] ?? '';
@@ -92,6 +92,14 @@ class GuestbookController extends Controller
             }
         }
         $validated['custom_answers'] = $cleanCustomAnswers;
+
+        // Simpan signature (base64 PNG dari signature pad)
+        $signature = $request->input('signature', '');
+        if ($signature && str_starts_with($signature, 'data:image/png;base64,')) {
+            $validated['signature'] = $signature;
+        } else {
+            $validated['signature'] = null;
+        }
 
         // Generate ID Kunjungan: TM-YYYYMMDD-XXXX (4 digit random)
         $dateStr = Carbon::now()->format('Ymd');
