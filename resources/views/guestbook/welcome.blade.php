@@ -25,6 +25,16 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        @media (min-width: 1024px) {
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+        }
     </style>
 </head>
 <body 
@@ -44,11 +54,12 @@
                 timeZone: 'Asia/Jakarta',
                 hour: '2-digit', 
                 minute: '2-digit',
-                second: '2-digit'
+                second: '2-digit',
+                hour12: false
             });
             const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
             const formattedDate = now.toLocaleDateString('id-ID', options);
-            this.currentDate = `${formattedDate} - WIB`;
+            this.currentDate = `${formattedDate} - WIB (24 Jam)`;
         }
     }"
 >
@@ -72,7 +83,11 @@
 
             <!-- Right: Realtime Time & Date Badge -->
             <div class="flex items-center gap-1.5 sm:gap-4">
-                <a href="{{ route('admin.login') }}" class="inline-flex items-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-colors hover:border-primary-200 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200" title="Login Admin">Admin</a>
+                <a href="{{ route('admin.login') }}" class="hidden lg:flex items-center justify-center p-2 text-slate-200 hover:text-slate-400 transition-colors rounded-full hover:bg-slate-50" title="Login Admin">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                </a>
                 <div class="flex flex-col items-end shrink-0 bg-slate-50 border border-slate-200/80 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl shadow-2xs">
                     <div class="text-xs sm:text-xl font-black text-primary-700 font-mono tracking-wider leading-none" x-text="currentTime"></div>
                     <div class="hidden sm:block text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1" x-text="currentDate"></div>
@@ -127,14 +142,14 @@
         </div>
 
         <!-- Right Side: Illustration -->
-        <div class="w-full lg:w-1/2 bg-primary-50 relative overflow-hidden aspect-[1091/437] sm:aspect-auto sm:min-h-[360px] lg:min-h-[520px] order-1 lg:order-2">
-            <div class="absolute w-[300px] sm:w-[450px] lg:w-[600px] h-[300px] sm:h-[450px] lg:h-[600px] bg-primary-100/50 rounded-full blur-3xl -top-16 -right-12"></div>
-            <div class="absolute w-[220px] sm:w-[340px] lg:w-[500px] h-[220px] sm:h-[340px] lg:h-[500px] bg-sky-200/40 rounded-full blur-3xl bottom-0 left-0"></div>
+        <div class="w-full lg:w-1/2 bg-primary-50 relative overflow-hidden aspect-[1091/437] sm:aspect-auto sm:min-h-[360px] lg:h-full lg:flex lg:items-center lg:justify-center order-1 lg:order-2">
+            <div class="absolute w-[300px] sm:w-[450px] lg:w-[800px] h-[300px] sm:h-[450px] lg:h-[800px] bg-primary-100/50 rounded-full blur-3xl -top-16 -right-12"></div>
+            <div class="absolute w-[220px] sm:w-[340px] lg:w-[600px] h-[220px] sm:h-[340px] lg:h-[600px] bg-sky-200/40 rounded-full blur-3xl bottom-0 left-0"></div>
             
             <img 
                 src="{{ asset('images/banner_mutu.png') }}" 
                 alt="Banner MUTU" 
-                class="relative z-10 w-full h-full object-contain drop-shadow-2xl"
+                class="relative z-10 w-full h-full lg:w-[85%] lg:h-auto object-contain drop-shadow-2xl animate-float"
             />
         </div>
         

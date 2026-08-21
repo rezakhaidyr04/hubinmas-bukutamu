@@ -323,4 +323,15 @@ class AdminController extends Controller
             ->header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->header('Expires', '0');
     }
+
+    /**
+     * Hapus Data Tamu
+     */
+    public function destroy($id)
+    {
+        $visit = Visit::findOrFail($id);
+        $visit->delete();
+        
+        return redirect()->route('admin.dashboard')->with('success', 'Data tamu berhasil dihapus.');
+    }
 }

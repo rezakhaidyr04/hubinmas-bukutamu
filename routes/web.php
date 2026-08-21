@@ -33,4 +33,5 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/export', [AdminController::class, 'export'])->name('admin.export');
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('/admin/settings', [AdminController::class, 'updateSettings'])->name('admin.settings.update');
+    Route::delete('/admin/visit/{id}', [AdminController::class, 'destroy'])->name('admin.visit.destroy');
 });
